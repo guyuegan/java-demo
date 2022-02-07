@@ -15,7 +15,7 @@ import static java.time.temporal.ChronoUnit.SECONDS;
  * 写2个线程，线程1添加10个元素到容器，
  * 线程2实现监控元素个数，当个数达到5，线程2给出提示并结束
  */
-public class TestLockSupport {
+public class T01_LockSupport {
     static Thread t2;
     static Thread t1;
     static List<Object> list = new ArrayList<>();
@@ -36,10 +36,10 @@ public class TestLockSupport {
         t2 = new Thread(() -> {
             while (list.size() != 5) {
                 LockSupport.park();
-                System.out.println(Thread.currentThread().getName() +": listSize"+ list.size());
             }
-            LockSupport.unpark(t1);
+            System.out.println(Thread.currentThread().getName() +": listSize"+ list.size());
             System.out.println(Thread.currentThread().getName() +": "+ "over");
+            LockSupport.unpark(t1);
         }, "T2");
 
         t1.start();
